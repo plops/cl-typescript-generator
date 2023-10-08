@@ -1,6 +1,11 @@
+# Video of Typescript usage
+
+https://youtu.be/SqcY0GlETPk
+
 
 # Instruction to ChatGPT 4
 
+## Typescript
 ```
 make a list of  typescript constructs. 
 Example: 
@@ -77,3 +82,60 @@ Certainly, here's a list of some TypeScript constructs:
 - `const [first, ...rest] = arr;`
 
 This is not an exhaustive list, but it should cover most of the common constructs you'll encounter.
+
+
+## JSX
+
+```
+Make a similar list of JSX constructs
+```
+
+Sure, here's a list of some common JSX constructs:
+
+### Elements
+- `<div></div>`
+  
+### Self-Closing Elements
+- `<input />`
+
+### Components
+- `<MyComponent />`
+
+### Nested Components
+- `<Parent><Child /></Parent>`
+
+### Fragment
+- `<>...</>`
+
+### Attributes/Props
+- `<div className="myClass"></div>`
+
+### Inline Styles
+- `<div style={{ color: 'red' }}></div>`
+
+### Expression Interpolation
+- `<div>{variable}</div>`
+
+### Conditional Rendering
+- `{condition && <Component />}`
+- `{condition ? <Component /> : null}`
+
+### Iterating Over Lists
+- `{array.map(item => <Component key={item.id} />)}`
+
+### Event Handling
+- `<button onClick={handleClick}></button>`
+
+### Controlled Components
+- `<input value={value} onChange={handleChange} />`
+
+### Refs
+- `<div ref={myRef}></div>`
+
+### Comments
+- `{/* This is a comment */}`
+
+### Spread Attributes
+- `<Component {...props} />`
+
+This isn't an exhaustive list but should give you a good overview of the common JSX constructs.
