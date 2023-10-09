@@ -4,50 +4,16 @@
 ;; https://github.com/jlongster/outlet
 ;; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
 
-;; lambda
-;; setf
-;; 10 use this to define def
-;; 20 missing arguments are undefined, extra are in 'arguments' object
-
-;; 30 semicolon separates statements
-
-;; 40 global scope is shared between all js files (use anonymous function
-;; to separate). in js the single way to create scope is a new
-;; function
-
-;; 50 variables can be defined anywhere but the declaration is 'hoisted'
-;; to the beginning -> i think i should expose this
-
-;; 60 assign methods to object's prototype, don't forget new!
-
-;; 70 the keyword 'this' usually refers to the object before the point but
-;; can be changed with apply and call; the global object of the browser is called `window`
-
-;; http://asmjs.org/spec/latest/
-
-;; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
-;; communication to webworker https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
-
-;; https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
-
-;; 11 lambdas can have a name for recursive function calls
-
-;; 80 rest arguments look like this: `function trivialNew(constructor, ...args) {`
-
-;; 90 i think i have to introduce let (using call to unnamed lambda)
-
-;; 100 the user program must be in package cl-js-generator (or i have to export all possible symbols)
-
-(in-package #:cl-js-generator)
+(in-package #:cl-typescript-generator)
 (setf (readtable-case *readtable*) :invert)
 
 (defparameter *file-hashes* (make-hash-table))
 
 
 (defun write-source (name code &optional (dir (user-homedir-pathname)))
-  (let* ((fn (merge-pathnames (format nil "~a.js" name)
+  (let* ((fn (merge-pathnames (format nil "~a" name)
 			      dir))
-	 (code-str (emit-js
+	 (code-str (emit-ts
 		    :clear-env t
 		    :code code))
 	 (fn-hash (sxhash fn))
@@ -63,11 +29,12 @@
 			   :if-exists :supersede
 			   :if-does-not-exist :create)
 	  (write-sequence code-str s))
-	#+sbcl (sb-ext:run-program "/usr/bin/js-beautify" (list "-r" (namestring fn)))))))
+	;#+sbcl (sb-ext:run-program "/usr/bin/js-beautify" (list "-r" (namestring fn)))
+	))))
 
 
 (defun beautify-source (code)
-  (let* ((code-str (emit-js
+  (let* ((code-str (emit-ts
 		    :clear-env t
 		    :code code)))
     #-sbcl code-str
@@ -137,20 +104,20 @@
 	do
 	(format t "~d:~%~a~%" i
 
-		(emit-js :code e)
+		(emit-ts :code e)
 					;(beautify-source e)
 		)))
 
 #+nil
 (test)
 
-(defun emit-js (&key code (str nil) (clear-env nil) (level 0))
+(defun emit-ts (&key code (str nil) (clear-env nil) (level 0))
 					;(format t "emit ~a ~a~%" level code)
   (when clear-env
     (setf *env-functions* nil
 	  *env-macros* nil))
   (flet ((emit (code &optional (dl 0))
-	   (emit-js :code code :clear-env nil :level (+ dl level))))
+	   (emit-ts :code code :clear-env nil :level (+ dl level))))
     (if code
 	(if (listp code)
 	    (case (car code)

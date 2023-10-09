@@ -1,26 +1,22 @@
 (eval-when (:compile-toplevel :execute :load-toplevel)
-  (mapc #'ql:quickload `("cl-js-generator"
+  (mapc #'ql:quickload `("cl-typescript-generator"
 			 "cl-who")))
 
-(in-package :cl-js-generator)
+(in-package :cl-typescript-generator)
 
 (setq cl-who:*attribute-quote-char* #\")
 (setf cl-who::*html-mode* :html5)
 
 (progn
   (defparameter *repo-sub-path* "08_ol")
-  (defparameter *path* (format nil "~a/stage/cl-js-generator/example/~a"
-			       (user-homedir-pathname)
-			       *repo-sub-path*))
-  (defparameter *inspection-facts*
-    `((10 "")))
+  (defparameter *path* "/home/martin/stage/cl-typescript-generator/example/01_start/")
   (defparameter *day-names*
     '("Monday" "Tuesday" "Wednesday"
       "Thursday" "Friday" "Saturday"
       "Sunday"))
 
   (let* ()
-    (with-open-file (s (format nil "~a/source/index.html" *path*)
+    #+nil (with-open-file (s (format nil "~a/source/index.html" *path*)
 		       :direction :output
 		       :if-exists :supersede
 		       :if-does-not-exist :create)
@@ -42,7 +38,7 @@
 	   (:div :id "map")
 	   (:script :type "module"
 		    :src "./out.js"))))))
-    (defun lprint (&key (msg "") (vars `()))
+    #+nil (defun lprint (&key (msg "") (vars `()))
       `(console.log
 	(string-backtick
 	 ,(format nil "~a ~{~a~^, ~}"
@@ -50,7 +46,7 @@
 		  (loop for v in vars
 			collect
 			(format nil "~a=${~a}" v v))))))
-    (write-source (format nil "~a/source/main" *path*)
+    (write-source (format nil "~a/source/main.ts" *path*)
 		  `(do0
 		    "import './style.css'"
 		    "import {Map, View} from 'ol'"
