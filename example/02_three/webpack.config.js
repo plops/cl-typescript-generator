@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development', // 'production' | 'development' | 'none'
+    mode: 'production', // 'production' | 'development' | 'none'
     entry: './dist/index.js',
     resolve: {
         extensions: ['.ts', '.js']
