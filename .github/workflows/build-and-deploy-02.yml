@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # - name: Install dependencies
     #   run: |
@@ -24,9 +24,9 @@ jobs:
     #       gcovr lcov
 
     - name: Install Dependencies
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18' # Or suitable Node.js version
+        node-version: '20' # Or suitable Node.js version
         cache: 'npm'
     - run: npm ci
 
