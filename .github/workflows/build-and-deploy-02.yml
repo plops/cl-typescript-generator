@@ -28,7 +28,10 @@ jobs:
       with:
         node-version: '20' # Or suitable Node.js version
         cache: 'npm'
-    - run: npm ci
+    - run: |
+        find .
+        cd example/02_three
+        npm ci
 
     - name: Build your Project
       run: |
