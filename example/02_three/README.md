@@ -1,5 +1,6 @@
+# Three.js example with typescript
 
-# Initial conversation with Google Gemini Ultra
+## Initial conversation with Google Gemini Ultra
 
 ```
 i want to write a typescript program that uses three js to display a sphere. explain the modern procedure of preparing the dependencies and how to host a test page locally. i have npm and tsc and edit in visual studio code. what else is required?
@@ -195,9 +196,9 @@ Absolutely! Let's outline the process of configuring Webpack to bundle your Thre
 
 ### Note: Webpack and Typescript
 
-Eventually I realized that webpack doesn't support typescript. It does however consume a .ts file as long as it is also valid javascript. once i added a function with type hints webpack emitted errors.
+Eventually, I realized that Webpack doesn't directly support TypeScript. However, it can consume a .ts file as long as it's also valid JavaScript. Once I added a function with type hints, Webpack emitted errors.
 
-the fix is to call tsc and then webpack:
+The fix is to call the TypeScript compiler (tsc) to translate your code into JavaScript, and then use Webpack to bundle the output.
 
 ```
 example/02_three $ tsc;npx webpack
