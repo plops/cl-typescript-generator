@@ -31,10 +31,12 @@ jobs:
     - run: npm ci
 
     - name: Build your Project
-      run: npm run build  # Assumes you have a 'build' script in package.json
-
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-to-github-pages@v1
-      with:
-        branch: gh-pages # Create this branch if it doesn't exist
-        folder: dist  # Or a different folder containing your build output 
+      run: |
+        npm run build  # Assumes you have a 'build' script in package.json
+        tsc
+        npx webpack 
+ #   - name: Deploy to GitHub Pages
+ #     uses: actions/deploy-to-github-pages@v1
+ #     with:
+ #       branch: gh-pages # Create this branch if it doesn't exist
+ #       folder: dist  # Or a different folder containing your build output 
