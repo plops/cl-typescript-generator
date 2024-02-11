@@ -114,6 +114,11 @@ Let me know if you'd like me to elaborate on specific parts or want additional f
 
 ## How to Install webpack
 
+```
+show me how to use webpack to bundle my three js project
+
+```
+
 Absolutely! Let's outline the process of configuring Webpack to bundle your Three.js project.
 
 **Assumptions**
@@ -187,3 +192,134 @@ Absolutely! Let's outline the process of configuring Webpack to bundle your Thre
 **Important:** Webpack configurations can range from simple to complex.  Adapt this setup based on your project's requirements. 
 
 **Let me know if you have specific file types or features you want to include in your bundle. I'll provide tailored configuration updates!** 
+
+### Note: Webpack and Typescript
+
+Eventually I realized that webpack doesn't support typescript. It does however consume a .ts file as long as it is also valid javascript. once i added a function with type hints webpack emitted errors.
+
+the fix is to call tsc and then webpack:
+
+```
+example/02_three $ tsc;npx webpack
+asset bundle.js 661 KiB [compared for emit] [minimized] [big] (name: main) 1 related asset
+./dist/index.js 2.05 KiB [built] [code generated]
+./node_modules/three/build/three.cjs 1.23 MiB [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  bundle.js (661 KiB)
+
+WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  main (661 KiB)
+      bundle.js
+
+
+WARNING in webpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+
+webpack 5.90.1 compiled with 3 warnings in 3671 ms
+```
+
+
+## Setting up github action and hosting on github pages
+
+```
+create a github action for my project and i also want to have a site on github pages that shows a running version of my code:
+
+example/02_three $ find .|grep -v node_mo
+.
+./.vscode
+./.vscode/tasks.json
+./webpack.config.js
+./dist
+./dist/index.js
+./dist/bundle.js.LICENSE.txt
+./dist/bundle.js
+./index.html
+./package.json
+./README.md
+./tsconfig.json
+./src
+./src/index.ts
+./package-lock.json
+```
+
+Absolutely! Let's set up a GitHub Action to streamline your Three.js project deployment to GitHub Pages. Here's a breakdown of the steps involved:
+
+**Assumptions**
+
+* You already have your code ready in a GitHub repository.
+* Your Three.js project builds into a folder like `dist` using tools like Webpack.
+
+**Steps**
+
+1. **Create a GitHub Action Workflow File**
+
+   * Create a directory named `.github/workflows` at the root of your repository.
+   * Inside that directory, create a YAML file, for example, name it `build-and-deploy.yml`. Here's the content for your workflow:
+
+   ```yaml
+   name: Build and Deploy to GitHub Pages
+
+   on:
+     push:
+       branches: [ main ]  # Change the branch name if needed 
+
+   jobs:
+     build-and-deploy:
+       runs-on: ubuntu-latest
+
+       steps:
+         - name: Checkout code 🛎️
+           uses: actions/checkout@v3
+
+         - name: Install Dependencies 📦
+           uses: actions/setup-node@v3
+           with:
+             node-version: '18' # Or suitable Node.js version
+             cache: 'npm'
+         - run: npm ci
+
+         - name: Build your Project 🏗️  
+           run: npm run build  # Assumes you have a 'build' script in package.json
+
+         - name: Deploy to GitHub Pages 🚀
+           uses: actions/deploy-to-github-pages@v1
+           with:
+             branch: gh-pages # Create this branch if it doesn't exist
+             folder: dist  # Or a different folder containing your build output 
+   ```
+
+2. **Set Up an Access Token (If Needed)**
+
+    The `actions/deploy-to-github-pages` action might require an access token for authentication in some setups:
+
+    * Go to your GitHub settings -> "Developer Settings" -> "Personal access tokens."
+    * Generate a new token with the "repo" scope.
+    * Store this token as a secret in your GitHub repository. Go to your repository's settings -> "Secrets" -> "Actions"  -> "New repository secret". Name it something like `ACCESS_TOKEN`.
+
+3. **Modify the Workflow (If Needed)**
+
+   * **Branch Names:** Adjust the `on: push: branches: [ main ]`  section to suit your needs.
+   * **Node.js Version:**  Tweak the `node-version` if you're using a different Node.js version.
+   * **Build Command:**   Ensure the `npm run build` part aligns with your project's actual build script.
+
+4. **Commit and Push**
+
+   Commit your workflow file (along with other changes), and push it to your remote GitHub repository. This will trigger the Action.
+
+5. **Configure GitHub Pages Source**
+
+   * Go to your repository's Settings -> Pages.
+   * Under "Source," select the `gh-pages` branch and then the root directory (`/`).
+
+**How It Works**
+
+* The Actions workflow triggers with each push to the specified branch.
+* It checks out your code, installs dependencies, and runs your build command.
+* The designated deployment action publishes your built content to the `gh-pages` branch.
+
+**Let me know if you need help with tailoring the build command or any other parts of the workflow. Please provide details about how your project is set to be built!** 
