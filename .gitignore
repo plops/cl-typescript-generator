@@ -21,8 +21,8 @@ Thumbs.db  # Windows specific
 /*.js.map
 
 # Dependency Directories
-/node_modules
-/bower_components
+node_modules/
+bower_components/
 
 # Logs, Temp Files
 *.log
