@@ -1,0 +1,37 @@
+# Operating System / Editor Files
+.DS_Store  # macOS specific
+Thumbs.db  # Windows specific
+*.swp      # Vim swap files
+
+# Backup files (Include more extensions as needed)
+*.bak
+*.swp
+*~
+
+# Temporary/Lock files
+.\#*
+*\~
+\#*\#
+
+# Compiled TypeScript / JavaScript
+/dist
+/build
+/out
+/*.js
+/*.js.map
+
+# Dependency Directories
+/node_modules
+/bower_components
+
+# Logs, Temp Files
+*.log
+*.tmp
+
+# IDE / Text Editor Settings
+.vscode/
+.idea/
+
+# Miscellaneous
+.env             # Local environment variables
+npm-debug.log*   # npm debug logs 
