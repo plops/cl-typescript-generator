@@ -110,3 +110,80 @@ You'll need a simple server to view your project. Consider these options:
 * **Animation:** The `animate` function creates a simple animation loop where the sphere rotates.
 
 Let me know if you'd like me to elaborate on specific parts or want additional features in your Three.js scene! 
+
+
+## How to Install webpack
+
+Absolutely! Let's outline the process of configuring Webpack to bundle your Three.js project.
+
+**Assumptions**
+
+* You have basic familiarity with Node.js and npm.
+* You have an existing project structure with an entry point JavaScript file (e.g., `index.js`) using Three.js
+
+**Steps**
+
+1. **Project Setup**
+   *  Initialize npm: `npm init -y`
+   *  Install Webpack and its command-line tool: `npm install --save-dev webpack webpack-cli`
+   *  Install Three.js: `npm install three`
+
+2. **Create `webpack.config.js`**
+   Create a file named `webpack.config.js` at the root of your project. Here's a basic configuration:
+
+   ```javascript
+   const path = require('path');
+
+   module.exports = {
+     mode: 'development', // Can be switched to 'production' later
+     entry: './src/index.js', // Your Three.js JavaScript entry point
+     output: {
+       filename: 'bundle.js',
+       path: path.resolve(__dirname, 'dist') // Output directory
+     },
+     module: {
+       rules: [
+         {
+           test: /\.(glsl|vs|fs|vert|frag)$/, // Handle shaders if you're using them
+           use: ['raw-loader']
+         }
+       ]
+     } 
+   };
+   ```
+
+3. **Update `index.html`**
+   Modify your `index.html` to load the bundled output script:
+
+   ```html
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Three.js with Webpack</title>
+   </head>
+   <body>
+       <script src="dist/bundle.js"></script> 
+   </body>
+   </html>
+   ```
+
+4. **Run Webpack**
+   Execute Webpack in your terminal: `npx webpack` (assumes you installed `webpack-cli`)
+
+**Explanation**
+
+* **`entry`:**  Tells Webpack where to start your project graph.
+* **`output`:** Specifies the name (`bundle.js`) and location (`dist`) for the bundled file.
+* **`mode`**: Sets Webpack to  development mode (unminified), but you can switch to 'production'  for a minified final build.
+* **`module.rules`:**  Loaders configure Webpack to handle specific file types.  This example assumes you might have shader files with extensions like `.glsl`.
+
+**Additional Tweaks**
+
+* **Development Server:** Add the `webpack-dev-server` for a quick development setup with live reloading.
+* **Loaders:** You might need additional loaders for different file types (images, models, etc.). 
+* **Plugins** Webpack offers powerful plugins for optimization and code handling.
+
+
+**Important:** Webpack configurations can range from simple to complex.  Adapt this setup based on your project's requirements. 
+
+**Let me know if you have specific file types or features you want to include in your bundle. I'll provide tailored configuration updates!** 
