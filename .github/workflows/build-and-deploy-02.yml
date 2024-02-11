@@ -24,10 +24,12 @@ jobs:
     #       gcovr lcov
 
     - name: Install Dependencies
+      working-directory: example/02_three
       uses: actions/setup-node@v4
       with:
         node-version: '20' # Or suitable Node.js version
         cache: 'npm'
+        
     - name: Install npm dependencies
       working-directory: example/02_three
       run: |
